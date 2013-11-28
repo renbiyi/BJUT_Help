@@ -13,17 +13,23 @@
 	<http pattern="/favicon.ico" security="none" />
 	<http pattern="/*.jsp" security="none" />
 
-	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+	<http use-expressions="true" auto-config="true">
 	
+		<form-login />
 		<logout/>
 		
+		<!--
 		<custom-filter position="FORM_LOGIN_FILTER" ref="loginFilter" />
+		-->
+		
 		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="securityFilter" />
 		
 	</http>
 	
 	<!-- 未登录的切入点 -->
+	<!--
 	<beans:bean id="authenticationProcessingFilterEntryPoint" class="com.baidu.foo.ssh.core.auth.AuthenticationProcessingFilterEntryPoint" />
+    -->
     
     <!--
     <beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
@@ -32,6 +38,7 @@
 	-->
 	
 	<!-- 登录过滤器 -->
+	<!--
 	<beans:bean id="loginFilter" class="com.baidu.foo.ssh.core.auth.LoginFilter">
 		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
 		<beans:property name="authenticationManager" ref="authenticationManager" />
@@ -45,6 +52,7 @@
 	<beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">    
         <beans:property name="defaultFailureUrl" value="/authentication_failure.jsp" />
     </beans:bean>
+    -->
 
 	<!-- 访问控制验证器Authority -->
 	<beans:bean id="securityFilter" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
@@ -56,13 +64,11 @@
 		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
 	</beans:bean>
 	
-	<beans:bean id="userDetailService" class="com.baidu.foo.ssh.core.auth.UserDetailServiceImpl" />
+	<beans:bean id="userDetailService" class="cn.edu.bjut.help.core.auth.UserDetailServiceImpl" />
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="userDetailService">
-			<!--
 			<password-encoder hash="md5" />
-			-->
 		</authentication-provider>
 	</authentication-manager>
 	
@@ -76,6 +82,6 @@
         </beans:property>
     </beans:bean>
     
-    <beans:bean id="securityMetadataSource" class="com.baidu.foo.ssh.core.auth.SecurityMetadataSource" />
+    <beans:bean id="securityMetadataSource" class="cn.edu.bjut.help.core.auth.SecurityMetadataSource" />
 
 </beans:beans>

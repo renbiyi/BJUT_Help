@@ -10,7 +10,7 @@
 	</resultMap>
 
 	<select id="findUserByUsername" parameterType="java.lang.String" resultMap="userResultMap">
-		select id, username, enabled from tb_user
+		select id, password, username, enabled from tb_user
 		<where>
 			username = #{username, jdbcType=VARCHAR}
 		</where>
