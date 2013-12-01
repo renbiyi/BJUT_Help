@@ -230,7 +230,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>BJUT-Help</finalName>
+		<finalName>BJUT_Help</finalName>
 
 		<pluginManagement>
 			<plugins>
