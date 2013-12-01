@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.edu.bjut.help.core.web.action.BaseAction;
+
 @Controller  
 @RequestMapping("demo")
-public class DemoAction {
+public class DemoAction extends BaseAction {
 
 	@RequestMapping(value = "hellojson", method = RequestMethod.GET) 
 	@ResponseBody

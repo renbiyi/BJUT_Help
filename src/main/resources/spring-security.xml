@@ -13,47 +13,39 @@
 	<http pattern="/favicon.ico" security="none" />
 	<http pattern="/*.jsp" security="none" />
 
-	<http use-expressions="true" auto-config="true">
 	
-		<form-login />
-		<logout/>
-		
-		<!--
-		<custom-filter position="FORM_LOGIN_FILTER" ref="loginFilter" />
-		-->
+	<http entry-point-ref="restAuthenticationEntryPoint">
+	
+		<access-denied-handler ref="accessDeniedHandler" />
+	
+		<form-login authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler" />
+		<logout invalidate-session="true" success-handler-ref="logoutSuccessHandler" logout-url="/j_spring_security_logout" />
 		
 		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="securityFilter" />
 		
 	</http>
 	
 	<!-- 未登录的切入点 -->
-	<!--
-	<beans:bean id="authenticationProcessingFilterEntryPoint" class="com.baidu.foo.ssh.core.auth.AuthenticationProcessingFilterEntryPoint" />
-    -->
-    
-    <!--
-    <beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
-        <beans:property name="loginFormUrl" value="/login.jsp" />  
+	<beans:bean id="restAuthenticationEntryPoint" class="cn.edu.bjut.help.core.auth.RestAuthenticationEntryPoint">
+		<beans:property name="defaultTargetUrl" value="/unauthorized" />
     </beans:bean>
-	-->
-	
-	<!-- 登录过滤器 -->
-	<!--
-	<beans:bean id="loginFilter" class="com.baidu.foo.ssh.core.auth.LoginFilter">
-		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
-		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
-		<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
-	</beans:bean>
-	
-	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-	</beans:bean>
     
-	<beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">    
-        <beans:property name="defaultFailureUrl" value="/authentication_failure.jsp" />
+    <beans:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+    	<beans:property name="errorPage" value="/accessDenied" />
     </beans:bean>
-    -->
-
+    
+    <beans:bean id="authenticationSuccessHandler" class="cn.edu.bjut.help.core.auth.RestAuthenticationSuccessHandler">
+	    <beans:property name="defaultTargetUrl" value="/authenticationSuccess" />
+    </beans:bean>
+    
+    <beans:bean id="authenticationFailureHandler" class="cn.edu.bjut.help.core.auth.RestAuthenticationFailureHandler">
+    	<beans:property name="defaultFailureUrl" value="/authenticationFailure" />
+    </beans:bean>
+    
+ 	<beans:bean id="logoutSuccessHandler" class="cn.edu.bjut.help.core.auth.RestLogoutSuccessHandler">
+ 	    <beans:property name="defaultTargetUrl" value="/logoutSuccess" />
+    </beans:bean>
+    
 	<!-- 访问控制验证器Authority -->
 	<beans:bean id="securityFilter" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<!-- 用户拥有的权限 -->
