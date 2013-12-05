@@ -27,6 +27,30 @@ CREATE TABLE `tb_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tb_message`;
+CREATE TABLE `tb_message` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` int(10) NOT NULL COMMENT 'user表外键',
+  `timestamp` TIMESTAMP(50) NOT NULL COMMENT '时间戳',
+  `content` varchar(255) NOT NULL COMMENT '消息内容',
+  `type` varchar(255) NOT NULL COMMENT '0-文字消息 1-语音消息',
+  `expire` int(10) NOT NULL COMMENT '过期时间（单位：秒）',
+  `longitude` decimal(8,5) NOT NULL COMMENT '经度',
+  `latitude` decimal(8,5) NOT NULL COMMENT '纬度',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tb_comment`;
+CREATE TABLE `tb_comment` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` int(10) NOT NULL COMMENT 'user表外键',
+  `message_id` int(10) NOT NULL COMMENT 'message表外键',
+  `content` varchar(255) NOT NULL COMMENT '评论内容',
+  `timestamp` TIMESTAMP(50) NOT NULL COMMENT '时间戳',
+  `is_read` tinyint(1) NOT NULL COMMENT '0-已读 1-未读',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- ----------------------------
 -- Records of user
 -- ----------------------------
