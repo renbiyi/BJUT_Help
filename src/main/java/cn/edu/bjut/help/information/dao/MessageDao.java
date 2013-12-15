@@ -1,5 +1,10 @@
 package cn.edu.bjut.help.information.dao;
 
-public interface MessageDao {
+import org.springframework.stereotype.Repository;
 
+import cn.edu.bjut.help.core.bo.Message;
+
+@Repository
+public interface MessageDao {
+	public int saveMessage(Message msg);
 }

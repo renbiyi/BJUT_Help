@@ -1,6 +1,7 @@
 package cn.edu.bjut.help.core.bo;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 
 public class Message implements Serializable {
@@ -9,13 +10,23 @@ public class Message implements Serializable {
 
 	private Long id;
 	private Long userId;
+	private String theme;
 	private Date timestamp;
 	private String content;
+	private String contact;
 	private Short type;
-	private Long expires;
+	private Long expire;
 	private Double longitude;
 	private Double latitude;
 
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -36,8 +47,8 @@ public class Message implements Serializable {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setTimestamp(Date timestamp2) {
+		this.timestamp = timestamp2;
 	}
 
 	public String getContent() {
@@ -72,12 +83,19 @@ public class Message implements Serializable {
 		this.latitude = latitude;
 	}
 
-	public Long getExpires() {
-		return expires;
+	public Long getExpire() {
+		return expire;
 	}
 
-	public void setExpires(Long expires) {
-		this.expires = expires;
+	public void setExpire(Long expire) {
+		this.expire = expire;
 	}
 
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
 }

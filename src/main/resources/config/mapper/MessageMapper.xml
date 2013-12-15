@@ -4,16 +4,21 @@
 
 	<resultMap type="cn.edu.bjut.help.core.bo.Message" id="messageResultMap">
 		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="user_id" property="user_id" jdbcType="BIGINT" />
+		<result column="theme" property="theme" jdbcType="VARCHAR" />
 		<result column="timestamp" property="timestamp" jdbcType="TIMESTAMP" />
+		<result column="contact" property="contact" jdbcType="BIGINT" />
 		<result column="content" property="content" jdbcType="VARCHAR" />
 		<result column="type" property="type" jdbcType="TINYINT" />
-		<result column="expires" property="expires" jdbcType="BIGINT" />
+		<result column="expire" property="expire" jdbcType="BIGINT" />
 		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
 		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
 	</resultMap>
-
-
-
+	
+	<insert id="saveMessage" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.bjut.help.core.bo.Message">
+        insert into tb_message(user_id,theme,timestamp,contact,content,type,expire,longitude,latitude)
+        values(#{userId},#{theme},#{timestamp},#{contact},#{content},#{type},#{expire},#{longitude},#{latitude})
+    </insert>
+	
 </mapper>
 

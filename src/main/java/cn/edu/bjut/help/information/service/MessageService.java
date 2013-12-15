@@ -1,8 +1,9 @@
 package cn.edu.bjut.help.information.service;
 
-import cn.edu.bjut.help.information.web.action.dto.MessageForm;
+import org.springframework.stereotype.Service;
+import cn.edu.bjut.help.core.bo.Message;
 
+@Service
 public interface MessageService {
-
-	void createMessage(MessageForm msgForm);
+	int saveMessage(Message msg);
 }
