@@ -3,9 +3,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +17,7 @@ import org.apache.velocity.texen.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,7 @@ import cn.edu.bjut.help.account.service.UserService;
 import cn.edu.bjut.help.core.bo.Message;
 import cn.edu.bjut.help.core.web.action.BaseAction;
 import cn.edu.bjut.help.information.service.MessageService;
+import cn.edu.bjut.help.information.web.action.dto.MessageForm;
 
 @Controller  
 @RequestMapping("message")
@@ -39,47 +41,36 @@ public class MessageAction extends BaseAction {
 	
 	@RequestMapping(value = "save/audio", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> saveAudioMessage() throws IOException {
+	public Map<String, Object> saveAudioMessage(@ModelAttribute MessageForm form) throws IOException {
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
 		MultipartFile file = req.getFile("audio");
-	
-//		String path = req.getContextPath()+"/audio/"+file.getOriginalFilename();
+		
 		String path = "E:/project/BJUT_Help/audio/"+file.getOriginalFilename();
-		System.out.println(path);
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		String theme = "null";
 		String content = path;
-		String contact = request.getParameter("contact");
-		String expire = request.getParameter("expire");
-		String longitude = request.getParameter("longitude");
-		String latitude = request.getParameter("latitude");
-		Date timestamp = new Date(System.currentTimeMillis());
-		Long uid = userService.findUserByUsername(username).getId();
-		String type = "1";
-		
-		if(file!=null && uid!=null && content!=null && content.length()!=0	&& contact!=null && contact.length()!=0
-			&& expire!=null && expire.length()!=0 && longitude!=null && longitude.length()!=0
-			&& longitude!=null && longitude.split("[.]")[0].length()<4 && latitude!=null && latitude.split("[.]")[0].length()<4	
-		){
-			Message mes = new Message();
-			mes.setUserId(uid);
-			mes.setContent(content);
-			mes.setContact(contact);
-			mes.setExpire(Long.parseLong(expire));
-			mes.setLatitude(Double.parseDouble(latitude));
-			mes.setLongitude(Double.parseDouble(longitude));
-			mes.setType(Short.parseShort(type));
-			mes.setTimestamp(timestamp);
-			mes.setTheme(theme);
-			messageService.saveMessage(mes);
-			
-			File output = new File(path);
-			FileUtils.copyInputStreamToFile(file.getInputStream(), output);
-			
-			jsonMap.put("status", 1);
-			jsonMap.put("data", "success");
+		Date timestamp = new Date();
+		Short type = 1;
+		int ret = 0;
+		if(file!=null && username!=null){
+			Long uid = userService.findUserByUsername(username).getId();
+			form.setUid(uid);
+			form.setTheme(theme);
+			form.setContent(content);
+			form.setType(type);
+			form.setTimestamp(timestamp);
+			ret = messageService.saveMessage(form);
+			if(ret==1){
+				File output = new File(path);
+				FileUtils.copyInputStreamToFile(file.getInputStream(), output);
+				jsonMap.put("status", 1);
+				jsonMap.put("data", "success");
+			}else{
+				jsonMap.put("status", 0);
+				jsonMap.put("data", "error");
+			}
 		}else{
 			jsonMap.put("status", 0);
 			jsonMap.put("data", "error");
@@ -88,43 +79,30 @@ public class MessageAction extends BaseAction {
 	}
 	
 	
-	//http://localhost:8080/message/save/text?theme=21313&content=12312&contact=123123&expire=123123&longitude=1241&latitude=32542
-	@RequestMapping(value = "save/text", method = RequestMethod.GET)
+	//http://localhost:8080/message/save/text?theme=21313&content=12312&contact=123123&expire=12&longitude=12&latitude=3
+	@RequestMapping(value = "save/text", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> saveTextMessage() {
+	public Map<String, Object> saveTextMessage(@ModelAttribute MessageForm form) {
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		String theme = request.getParameter("theme");
-		String content = request.getParameter("content");
-		String contact = request.getParameter("contact");
-		String expire = request.getParameter("expire");
-		String longitude = request.getParameter("longitude");
-		String latitude = request.getParameter("latitude");
-		Date timestamp = new Date(System.currentTimeMillis());
-		String type = "0";
 		
-		if(username!=null && username.length()!=0 && theme!=null && theme.length()!=0
-			&& content!=null && content.length()!=0	&& contact!=null && contact.length()!=0
-			&& expire!=null && expire.length()!=0 && longitude!=null && longitude.length()!=0
-			&& longitude!=null && longitude.split("[.]")[0].length()<4 && latitude!=null && latitude.split("[.]")[0].length()<4){
-			
+		Date timestamp = new Date();
+		
+		short type = 0;
+		int ret = 0;
+		if(username!=null){
 			Long uid = userService.findUserByUsername(username).getId();
-			Message mes = new Message();
-			mes.setUserId(uid);
-			mes.setContent(content);
-			mes.setContact(contact);
-			mes.setExpire(Long.parseLong(expire));
-			mes.setLatitude(Double.parseDouble(latitude));
-			mes.setLongitude(Double.parseDouble(longitude));
-			mes.setType(Short.parseShort(type));
-			mes.setTimestamp(timestamp);
-			mes.setTheme(theme);
-			messageService.saveMessage(mes);
-			jsonMap.put("status", 1);
-			jsonMap.put("data", "success");
-		}else{
-			jsonMap.put("status", 0);
-			jsonMap.put("data", "error");
+			form.setUid(uid);
+			form.setType(type);
+			form.setTimestamp(timestamp);
+			ret = messageService.saveMessage(form);
+			if(ret==1){
+				jsonMap.put("status", ret);
+				jsonMap.put("data", "success");
+			}else{
+				jsonMap.put("status", 0);
+				jsonMap.put("data", "error");
+			}
 		}
 		return jsonMap;
 	}

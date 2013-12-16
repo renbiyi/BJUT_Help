@@ -1,38 +1,41 @@
 package cn.edu.bjut.help.information.web.action.dto;
 
+import java.util.Date;
+import cn.edu.bjut.help.core.bo.Message;
+
 public class MessageForm {
 
-	private int uid;
+	private Long uid;
 	private String theme;
 	private String content;
 	private String contact;
-	private String expire;
-	private long timestamp;
-	private String type;
+	private Long expire;
+	private Date timestamp;
+	private Short type;
 	private Double longitude;
 	private Double latitude;
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double d) {
+	public void setLongitude(Double d) {
 		this.longitude = d;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public int getUid() {
+	public Long getUid() {
 		return uid;
 	}
 
-	public void setUid(int uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
@@ -60,28 +63,42 @@ public class MessageForm {
 		this.contact = contact;
 	}
 
-	public String getExpire() {
+	public Long getExpire() {
 		return expire;
 	}
 
-	public void setExpire(String expire) {
+	public void setExpire(Long expire) {
 		this.expire = expire;
 	}
 
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public String getType() {
+	public Short getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Short type) {
 		this.type = type;
+	}
+	
+	public Message createMessage(){
+		Message m = new Message();
+		m.setUserId(uid);
+		m.setContact(contact);
+		m.setContent(content);
+		m.setExpire(expire);
+		m.setLatitude(latitude);
+		m.setLongitude(longitude);
+		m.setTheme(theme);
+		m.setTimestamp(timestamp);
+		m.setType(type);
+		return m;
 	}
 
 }

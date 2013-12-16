@@ -1,7 +1,8 @@
 package cn.edu.bjut.help.core.bo;
 
 import java.io.Serializable;
-import java.sql.Date;
+
+import java.util.Date;
 
 public class Comment implements Serializable {
 
