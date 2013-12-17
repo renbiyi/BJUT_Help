@@ -1,7 +1,10 @@
 package cn.edu.bjut.help.information.service.impl;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ObjectUtils;
@@ -14,11 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.edu.bjut.help.core.bo.Message;
 import cn.edu.bjut.help.core.config.SystemConfig;
 import cn.edu.bjut.help.core.cons.MessageType;
+import cn.edu.bjut.help.core.excep.ServiceException;
 import cn.edu.bjut.help.core.web.action.dto.Visitor;
 import cn.edu.bjut.help.information.dao.MessageDao;
 import cn.edu.bjut.help.information.service.MessageService;
 import cn.edu.bjut.help.information.web.action.dto.MessageForm;
+import cn.edu.bjut.help.information.web.action.dto.MessageVO;
 import cn.edu.bjut.help.util.RandomNumberGenernator;
+import cn.edu.bjut.help.util.SphericalDistanceCalculator;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -87,5 +93,28 @@ public class MessageServiceImpl implements MessageService {
 				&& ObjectUtils.notEqual(form.getExpire(), null)
 				&& ObjectUtils.notEqual(form.getLatitude(), null) && ObjectUtils
 					.notEqual(form.getLongitude(), null));
+	}
+
+	@Override
+	public List<MessageVO> listMessagesByPosition(Double longitude,
+			Double latitude) throws ServiceException {
+		
+		if (ObjectUtils.equals(longitude, null) || ObjectUtils.equals(latitude, null)) {
+			throw new ServiceException("longitude/latitude can't be null.");
+		}
+		
+		List<MessageVO> messageVOs = new LinkedList<MessageVO>();
+		
+		List<Message> msgs = msgDao.findMessages();
+		for (Message msg : msgs) {
+			double distance = SphericalDistanceCalculator.distance(longitude, latitude, msg.getLongitude(), msg.getLatitude());
+			MessageVO vo = new MessageVO(msg);
+			vo.setDistance(distance);
+			messageVOs.add(vo);
+		}
+		
+		Collections.sort(messageVOs);
+		
+		return messageVOs;
 	}
 }

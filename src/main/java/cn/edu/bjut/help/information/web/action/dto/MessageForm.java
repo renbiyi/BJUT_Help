@@ -15,8 +15,8 @@ public class MessageForm {
 		return longitude;
 	}
 
-	public void setLongitude(Double d) {
-		this.longitude = d;
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public Double getLatitude() {

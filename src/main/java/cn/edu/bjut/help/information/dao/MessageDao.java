@@ -1,7 +1,10 @@
 package cn.edu.bjut.help.information.dao;
 
+import java.util.List;
+
 import cn.edu.bjut.help.core.bo.Message;
 
 public interface MessageDao {
-	public int saveMessage(Message msg);
+	int saveMessage(Message msg);
+	List<Message> findMessages();
 }

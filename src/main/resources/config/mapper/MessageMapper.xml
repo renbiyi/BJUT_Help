@@ -32,6 +32,10 @@
         	#{latitude, jdbcType=DOUBLE}
         </trim>
     </insert>
+    
+    <select id="findMessages" resultMap="messageResultMap">
+		select id, user_id, theme, timestamp, contact, content, type, expire, longitude, latitude from tb_message
+	</select>
 	
 </mapper>
 
