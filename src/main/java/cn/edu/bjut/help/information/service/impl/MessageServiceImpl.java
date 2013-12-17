@@ -66,16 +66,6 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	private boolean createMessage(MessageForm msgForm, Visitor visitor, MessageType type) {
-//		int ret = 0;
-//		if(msg.getUid()!=null  
-//			&& msg.getContact()!=null && msg.getContact().length()!=0
-//			&& msg.getExpire()!=null && msg.getLongitude()!=null
-//			&& msg.getLatitude()!=null){
-//			msgDao.saveMessage(msg.createMessage());
-//			ret = 1;
-//		}else{
-//			ret = 0;
-//		}
 		
 		if (!validateMessageForm(msgForm)) {
 			return Boolean.FALSE;

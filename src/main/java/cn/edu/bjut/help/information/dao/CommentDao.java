@@ -1,9 +1,12 @@
 package cn.edu.bjut.help.information.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.edu.bjut.help.core.bo.Comment;
 
-@Repository
 public interface CommentDao {
-	public void saveComment(Comment comment);
+	void saveComment(Comment comment);
+	List<Comment> listCommentsByMessageId(@Param("messageId") Long messageId, @Param("userId") Long userId);
 }

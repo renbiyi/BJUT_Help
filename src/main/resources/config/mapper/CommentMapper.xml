@@ -24,6 +24,16 @@
          	#{isRead, jdbcType=BOOLEAN}
          </trim>
 	</insert>
+	
+	<select id="listCommentsByMessageId" resultMap="commentResultMap">
+		select c.id, c.user_id, c.message_id, c.content, c.timestamp, c.is_read from tb_comment c left join tb_message m on c.message_id = m.id
+		<where>
+			c.message_id = #{messageId, jdbcType=BIGINT} and
+			m.user_id = #{userId, jdbcType=BIGINT}
+		</where>
+		order by c.timestamp desc
+	</select>
+
 
 </mapper>
 
