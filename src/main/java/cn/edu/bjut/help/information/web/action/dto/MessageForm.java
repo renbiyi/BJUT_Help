@@ -1,17 +1,16 @@
 package cn.edu.bjut.help.information.web.action.dto;
 
-import java.util.Date;
 import cn.edu.bjut.help.core.bo.Message;
 
 public class MessageForm {
 
-	private Long uid;
+//	private Long uid;
 	private String theme;
 	private String content;
 	private String contact;
 	private Long expire;
-	private Date timestamp;
-	private Short type;
+//	private Date timestamp;
+//	private Short type;
 	private Double longitude;
 	private Double latitude;
 
@@ -31,13 +30,13 @@ public class MessageForm {
 		this.latitude = latitude;
 	}
 
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
+//	public Long getUid() {
+//		return uid;
+//	}
+//
+//	public void setUid(Long uid) {
+//		this.uid = uid;
+//	}
 
 	public String getTheme() {
 		return theme;
@@ -71,34 +70,34 @@ public class MessageForm {
 		this.expire = expire;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public Short getType() {
-		return type;
-	}
-
-	public void setType(Short type) {
-		this.type = type;
-	}
-	
+//	public Date getTimestamp() {
+//		return timestamp;
+//	}
+//
+//	public void setTimestamp(Date timestamp) {
+//		this.timestamp = timestamp;
+//	}
+//
+//	public Short getType() {
+//		return type;
+//	}
+//
+//	public void setType(Short type) {
+//		this.type = type;
+//	}
+//	
 	public Message createMessage(){
-		Message m = new Message();
-		m.setUserId(uid);
-		m.setContact(contact);
-		m.setContent(content);
-		m.setExpire(expire);
-		m.setLatitude(latitude);
-		m.setLongitude(longitude);
-		m.setTheme(theme);
-		m.setTimestamp(timestamp);
-		m.setType(type);
-		return m;
+		Message msg = new Message();
+//		m.setUserId(uid);
+		msg.setContact(this.contact);
+		msg.setContent(this.content);
+		msg.setExpire(this.expire);
+		msg.setLatitude(this.latitude);
+		msg.setLongitude(this.longitude);
+		msg.setTheme(this.theme);
+//		m.setTimestamp(timestamp);
+//		m.setType(type);
+		return msg;
 	}
 
 }

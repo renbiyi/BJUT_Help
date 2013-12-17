@@ -4,7 +4,7 @@
 
 	<resultMap type="cn.edu.bjut.help.core.bo.Message" id="messageResultMap">
 		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="user_id" property="user_id" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
 		<result column="theme" property="theme" jdbcType="VARCHAR" />
 		<result column="timestamp" property="timestamp" jdbcType="TIMESTAMP" />
 		<result column="contact" property="contact" jdbcType="BIGINT" />
@@ -16,8 +16,21 @@
 	</resultMap>
 	
 	<insert id="saveMessage" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.bjut.help.core.bo.Message">
-        insert into tb_message(user_id,theme,timestamp,contact,content,type,expire,longitude,latitude)
-        values(#{userId},#{theme},#{timestamp},#{contact},#{content},#{type},#{expire},#{longitude},#{latitude})
+        insert into tb_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        	user_id, theme, timestamp, contact, content, type, expire, longitude, latitude
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        	#{userId, jdbcType=BIGINT},
+        	#{theme, jdbcType=VARCHAR},
+        	#{timestamp, jdbcType=TIMESTAMP},
+        	#{contact, jdbcType=BIGINT},
+        	#{content, jdbcType=VARCHAR},
+        	#{type, jdbcType=TINYINT},
+        	#{expire, jdbcType=BIGINT},
+        	#{longitude, jdbcType=DOUBLE},
+        	#{latitude, jdbcType=DOUBLE}
+        </trim>
     </insert>
 	
 </mapper>

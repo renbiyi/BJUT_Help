@@ -12,8 +12,17 @@
 	</resultMap>
 
 	<insert id="saveComment" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.bjut.help.core.bo.Comment">
-		 insert into tb_comment(user_id,message_id,content,timestamp,is_read)
-         values(#{userId},#{messageId},#{content},#{timestamp},#{isRead})
+		 insert into tb_comment
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		 	user_id, message_id, content, timestamp, is_read
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+         	#{userId, jdbcType=BIGINT},
+         	#{messageId, jdbcType=BIGINT},
+         	#{content, jdbcType=VARCHAR},
+         	#{timestamp, jdbcType=TIMESTAMP},
+         	#{isRead, jdbcType=BOOLEAN}
+         </trim>
 	</insert>
 
 </mapper>

@@ -53,7 +53,7 @@ public class RestAuthenticationAction extends BaseAction {
         return jsonMap;
     }
 	
-	@RequestMapping(value = "unauthorized", method = RequestMethod.GET) 
+	@RequestMapping(value = "unauthorized") 
 	@ResponseBody
     public Map<String, Object> unauthorized() {
 		
