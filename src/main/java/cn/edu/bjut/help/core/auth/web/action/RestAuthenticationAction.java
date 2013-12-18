@@ -38,6 +38,7 @@ public class RestAuthenticationAction extends BaseAction {
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		jsonMap.put("httpcode", HttpServletResponse.SC_OK);
 		jsonMap.put("message", "Authentication success");
+		jsonMap.put("jsessionid", getSessionId());
 		
         return jsonMap;
     }
