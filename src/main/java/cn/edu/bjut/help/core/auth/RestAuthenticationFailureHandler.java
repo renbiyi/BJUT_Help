@@ -23,7 +23,7 @@ public class RestAuthenticationFailureHandler implements AuthenticationFailureHa
         if (defaultFailureUrl == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: " + exception.getMessage());
         } else {
-        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        	response.setStatus(HttpServletResponse.SC_OK);
             saveException(request, exception);
             request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
         }
