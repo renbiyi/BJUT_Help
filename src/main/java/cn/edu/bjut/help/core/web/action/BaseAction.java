@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import cn.edu.bjut.help.account.service.UserService;
@@ -47,5 +48,11 @@ public class BaseAction {
 		}
 		
 		return visitor;
+	}
+	
+	protected String getSessionId() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
+		return details.getSessionId();
 	}
 }
