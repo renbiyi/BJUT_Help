@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = "classpath:spring.xml")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)  
 @Transactional 
-public class SpringTransactionalTestCase {
+public class SpringTransactionalIntegrationTestCase {
 
     @Test
     public void doNothing() {
