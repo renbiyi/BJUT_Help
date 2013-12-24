@@ -10,6 +10,7 @@ public class MessageForm {
 	private Long expire;
 	private Double longitude;
 	private Double latitude;
+	private String position;
 
 	public Double getLongitude() {
 		return longitude;
@@ -59,6 +60,14 @@ public class MessageForm {
 		this.expire = expire;
 	}
 
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
 	public Message createMessage(){
 		Message msg = new Message();
 		msg.setContact(this.contact);
@@ -66,6 +75,7 @@ public class MessageForm {
 		msg.setExpire(this.expire);
 		msg.setLatitude(this.latitude);
 		msg.setLongitude(this.longitude);
+		msg.setPosition(this.position);
 		msg.setTheme(this.theme);
 		return msg;
 	}

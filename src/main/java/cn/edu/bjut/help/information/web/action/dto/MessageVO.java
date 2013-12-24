@@ -19,6 +19,7 @@ public class MessageVO extends Message implements Comparable<MessageVO> {
 		this.setExpire(msg.getExpire());
 		this.setLongitude(msg.getLongitude());;
 		this.setLatitude(msg.getLatitude());
+		this.setPosition(msg.getPosition());
 	}
 
 	public Double getDistance() {

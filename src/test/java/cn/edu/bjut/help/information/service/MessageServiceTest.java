@@ -37,6 +37,7 @@ public class MessageServiceTest extends UnitTestCase {
 		msgForm.setExpire(12L);
 		msgForm.setLatitude(12.87);
 		msgForm.setLongitude(67.98);
+		msgForm.setPosition("zzzz");
 		
 		Visitor visitor = new Visitor();
 		visitor.setId(1L);
@@ -58,6 +59,7 @@ public class MessageServiceTest extends UnitTestCase {
 		msgForm.setExpire(12L);
 		msgForm.setLatitude(12.87);
 		msgForm.setLongitude(67.98);
+		msgForm.setPosition("zzzz");
 		
 		Visitor visitor = new Visitor();
 		visitor.setId(1L);

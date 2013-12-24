@@ -17,6 +17,7 @@ public class Message implements Serializable {
 	private Long expire;
 	private Double longitude;
 	private Double latitude;
+	private String position;
 
 	public String getTheme() {
 		return theme;
@@ -97,4 +98,13 @@ public class Message implements Serializable {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	
 }

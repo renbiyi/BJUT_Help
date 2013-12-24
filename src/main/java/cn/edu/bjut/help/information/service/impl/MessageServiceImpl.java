@@ -91,8 +91,9 @@ public class MessageServiceImpl implements MessageService {
 		return (StringUtils.isNotBlank(form.getTheme())
 				&& StringUtils.isNotBlank(form.getContact())
 				&& ObjectUtils.notEqual(form.getExpire(), null)
-				&& ObjectUtils.notEqual(form.getLatitude(), null) && ObjectUtils
-					.notEqual(form.getLongitude(), null));
+				&& ObjectUtils.notEqual(form.getLatitude(), null) 
+				&& ObjectUtils.notEqual(form.getLongitude(), null))
+				&& StringUtils.isNotBlank(form.getPosition());
 	}
 
 	@Override

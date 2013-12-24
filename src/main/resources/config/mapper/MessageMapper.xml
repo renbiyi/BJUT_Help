@@ -13,12 +13,13 @@
 		<result column="expire" property="expire" jdbcType="BIGINT" />
 		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
 		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="position" property="position" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<insert id="saveMessage" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.bjut.help.core.bo.Message">
         insert into tb_message
         <trim prefix="(" suffix=")" suffixOverrides=",">
-        	user_id, theme, timestamp, contact, content, type, expire, longitude, latitude
+        	user_id, theme, timestamp, contact, content, type, expire, longitude, latitude, position
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         	#{userId, jdbcType=BIGINT},
@@ -29,12 +30,13 @@
         	#{type, jdbcType=TINYINT},
         	#{expire, jdbcType=BIGINT},
         	#{longitude, jdbcType=DOUBLE},
-        	#{latitude, jdbcType=DOUBLE}
+        	#{latitude, jdbcType=DOUBLE},
+        	#{position, jdbcType=VARCHAR}
         </trim>
     </insert>
     
     <select id="findMessages" resultMap="messageResultMap">
-		select id, user_id, theme, timestamp, contact, content, type, expire, longitude, latitude from tb_message
+		select id, user_id, theme, timestamp, contact, content, type, expire, longitude, latitude, position from tb_message
 	</select>
 	
 </mapper>
