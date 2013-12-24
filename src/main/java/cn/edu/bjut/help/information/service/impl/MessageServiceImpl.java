@@ -32,7 +32,7 @@ public class MessageServiceImpl implements MessageService {
 	private Logger logger = Logger.getLogger(MessageService.class);
 	
 	@Autowired
-	private MessageDao msgDao;
+	private MessageDao messageDao;
 	@Autowired
 	private SystemConfig config;
 	
@@ -83,7 +83,7 @@ public class MessageServiceImpl implements MessageService {
 		msg.setType(type.getValue());
 		msg.setTimestamp(new Date());
 		
-		msgDao.saveMessage(msg);
+		messageDao.saveMessage(msg);
 		return Boolean.TRUE;
 	}
 	
@@ -105,7 +105,7 @@ public class MessageServiceImpl implements MessageService {
 		
 		List<MessageVO> messageVOs = new LinkedList<MessageVO>();
 		
-		List<Message> msgs = msgDao.findMessages();
+		List<Message> msgs = messageDao.findMessages();
 		for (Message msg : msgs) {
 			double distance = SphericalDistanceCalculator.distance(longitude, latitude, msg.getLongitude(), msg.getLatitude());
 			MessageVO vo = new MessageVO(msg);

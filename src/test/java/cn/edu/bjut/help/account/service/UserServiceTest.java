@@ -3,16 +3,22 @@ package cn.edu.bjut.help.account.service;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import cn.edu.bjut.help.account.dao.UserDao;
+import cn.edu.bjut.help.account.service.impl.UserServiceImpl;
 import cn.edu.bjut.help.core.bo.User;
 import cn.edu.bjut.help.test.util.UnitTestCase;
 
 public class UserServiceTest extends UnitTestCase {
 
-	@Mock
 	private UserService userService;
+	
+	@Override
+	public void setUp() {
+		userService = new UserServiceImpl();
+	}
 	
 	@Test
 	public void itShouldFindUser() {
@@ -23,7 +29,9 @@ public class UserServiceTest extends UnitTestCase {
 		givenUser.setUsername(username);
 		
 		// [When]
-		Mockito.when(userService.findUserByUsername(username)).thenReturn(givenUser);
+		UserDao userDao = Mockito.mock(UserDao.class);
+		ReflectionTestUtils.setField(userService, "userDao", userDao);
+		Mockito.when(userDao.findUserByUsername(username)).thenReturn(givenUser);
 		User user = userService.findUserByUsername(username);
 		
 		// [Then]
