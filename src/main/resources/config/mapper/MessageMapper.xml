@@ -37,6 +37,9 @@
     
     <select id="findMessages" resultMap="messageResultMap">
 		select id, user_id, theme, timestamp, contact, content, type, expire, longitude, latitude, position from tb_message
+		<where>
+			(timestamp + INTERVAL expire HOUR) > now()
+		</where>
 	</select>
 	
 </mapper>
