@@ -42,6 +42,7 @@ CREATE TABLE `tb_message` (
   `expire` int(10) NOT NULL COMMENT '过期时间（单位：秒）',
   `longitude` decimal(8,5) NOT NULL COMMENT '经度',
   `latitude` decimal(8,5) NOT NULL COMMENT '纬度',
+  `position` varchar(255) NOT NULL COMMENT '位置信息描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
